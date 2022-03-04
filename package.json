@@ -1,0 +1,23 @@
+{
+  "name": "bigcommerce-api-node",
+  "version": "0.0.1",
+  "author": "BigCommerce",
+  "description": "A node module for authentication and communication with the BigCommerce API",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --max-warnings 0 src/**/*.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@bigcommerce/eslint-config": "^2.3.1",
+    "@types/node": "^17.0.21",
+    "eslint": "^8.10.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.6.2"
+  },
+  "prettier": "@bigcommerce/eslint-config/prettier"
+}
