@@ -2,12 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { JwtPayload, verify } from 'jsonwebtoken';
 
 import { BigCommerceConfigurationError } from './errors/BigCommerceConfigurationError';
-import {
-  AuthCallbackQueryParams,
-  AuthResponsePayload,
-  BigCommerceConfig,
-  BigCommerceConfigProperties,
-} from './types';
+import { AuthCallbackQueryParams, AuthResponsePayload, BigCommerceConfig, BigCommerceConfigProperties } from './types';
 import { assertIsError } from './utils/assertIsError';
 import { keysToSnakeCase } from './utils/cases';
 

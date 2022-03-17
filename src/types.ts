@@ -19,7 +19,6 @@ export interface AuthCallbackQueryParams {
   context: string;
 }
 
-/* eslint-disable @typescript-eslint/naming-convention */
 export interface AuthResponsePayload {
   access_token: string;
   scope: string;
@@ -27,7 +26,6 @@ export interface AuthResponsePayload {
   context: string;
   account_uuid: string;
 }
-/* eslint-enable @typescript-eslint/naming-convention */
 
 export interface User {
   id: number;
