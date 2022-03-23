@@ -18,69 +18,36 @@ First, import the package into your project:
 import BigCommerce from 'bigcommerce-api-node';
 ```
 
-Then, create your BigCommerce object with configuration options relevant to your use case:
+Then, create a BigCommerce object with configuration options relevant to your use case.
+### The BigCommerce Object
 
-```js
-const bigcommerce = new BigCommerce({
-  clientId: "YOUR_CLIENT_ID",
-  clientSecret: "YOUR_CLIENT_SECRET",
-  authCallback: "https://yourapplication.com/auth",
-  // ...etc.
-});
-```
-### Configuration Object
+The main `BigCommerce` import is an object that contains properties for different use cases of the BigCommerce Node Client. The properties available are described below:
 
-These are the available properties that can be passed into the BigCommerce constructor when instantiating it:
+* `Auth`: This class can be instantiated and used to handle the OAuth flow that begins when a merchant clicks **Install** on a single-click app. 
 
-```js
-{
-  // Client ID (optional): Found in the BigCommerce DevTools dashboard when you create an app.
-  // Required to call the `authorize` method.
-  clientId: '123abc',
-
-  // Client Secret (optional): Found in the BigCommerce DevTools dashboard when you create an app.
-  // Required to call the `authorize` and `verifyJWT` methods.
-  clientSecret: '789xyz',
-
-  // Auth Callback (optional): URL used as the `redirect_uri` in the POST request to /oauth2/token.
-  // Required to call the `authorize` method.
-  authCallback: 'https://yourapplication.com/auth',
-
-  // API Host (optional): Defaults to 'api.bigcommerce.com'. You probably don't want to change this, 
-  // this option is here for internal BigCommerce employees mainly.
-  apiHost: 'api.bigcommerce.com',
-
-  // Login Host (optional): Defaults to 'login.bigcommerce.com'. You probably don't want to change this, 
-  // this option is here for internal BigCommerce employees mainly.
-  loginHost: 'login.bigcommerce.com',
-}
-```
-
-While all of the configuration properties above are labelled as 'optional', a subset of properties may be required depending on how you're using the BigCommerce client. For example, the section below on [Authentication](#authentication) requires that the BigCommerce configuration contains non-null values for `clientId`, `clientSecret`, and `authCallback`. 
-
-In the event that a method does not have values for required configuration properties, a `BigCommerceConfigurationError` will be thrown.
-
-## Authentication
+## OAuth
 
 The `bigcommerce-api-node` package can be used to handle the OAuth flow that begins when a merchant clicks **Install** on a single-click app.
 
-First, create a BigCommerce object with `clientId`, `clientSecret`, and `authCallback` as configuration options:
+First, create a BigCommerce object with `clientId`, `clientSecret`, and `authCallback` as required configuration options:
 
 ```js
-const bigcommerce = new BigCommerce({
+const bigcommerceAuth = new BigCommerce.Auth({
   clientId: "YOUR_CLIENT_ID",
   clientSecret: "YOUR_CLIENT_SECRET",
   authCallback: "https://yourapplication.com/auth",
 });
 ```
 
-The `authorize` method takes one parameter — an object containing values for `code`, `scope`, and `context`, which are provided by the GET request to your store when a merchant installs your app.
+The `bigcommerceAuth` object created above exposes two public methods: `authorize` and `verifyJWT`.
+
+The `authorize` method takes one parameter — an object containing string values for `code`, `scope`, and `context`, which are provided by the GET request to your store when a merchant installs your app.
 
 ```js
-const session = await bigcommerce.authorize({code, scope, context});
+const payload = await bigcommerceAuth.authorize({code, scope, context});
 ```
 
-The object stored in the `session` variable above will have the following shape:
+The object stored in the `payload` variable above will contain the following key/value pairs:
 
 ```js
 {
@@ -96,13 +63,13 @@ The object stored in the `session` variable above will have the following shape:
 }
 ```
 
-The `bigcommerce-api-node` package also ships with a `verifyJWT` method that can be used to verify and return the payload returned by the `load`, `uninstall`, and `remove User` callbacks. Each event triggers a GET request from BigCommerce to your app's callback endpoints containing a `signed_payload_jwt` as a query parameter. Once you parse the `signed_payload_jwt` from the request parameters, you can pass it to the `verifyJWT` method as follows:
+The `verifyJWT` method can be used to verify and return the payload returned by the `load`, `uninstall`, and `remove User` callbacks. Each event triggers a GET request from BigCommerce to your app's callback endpoints containing a `signed_payload_jwt` as a query parameter. Once you parse the `signed_payload_jwt` from the request parameters, you can pass it to the `verifyJWT` method as follows:
 
 ```js
-const session = bigcommerce.verifyJWT(signed_payload_jwt);
+const payload = bigcommerceAuth.verifyJWT(signed_payload_jwt);
 ```
 
-The object stored in the `session` variable above will have the following shape:
+The object stored in the `payload` variable above will contain the following key/value pairs:
 
 ```js
 {

@@ -1,16 +1,8 @@
-export interface BigCommerceConfig {
-  clientId?: string;
-  clientSecret?: string;
-  authCallback?: string;
+export interface OAuthConfig {
+  clientId: string;
+  clientSecret: string;
+  authCallback: string;
   loginHost?: string;
-}
-
-export enum BigCommerceConfigProperties {
-  ClientId = 'clientId',
-  ClientSecret = 'clientSecret',
-  AuthCallback = 'authCallback',
-  ApiHost = 'apiHost',
-  LoginHost = 'loginHost',
 }
 
 export interface AuthCallbackQueryParams {

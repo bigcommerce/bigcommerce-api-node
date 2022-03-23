@@ -83,7 +83,7 @@ module.exports = {
             types: ['boolean', 'string', 'number', 'array'],
           },
           {
-            format: ['camelCase', 'snake_case'],
+            format: ['camelCase', 'snake_case', 'PascalCase'],
             selector: 'property',
           },
           {

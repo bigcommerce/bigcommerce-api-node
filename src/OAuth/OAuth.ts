@@ -1,17 +1,27 @@
 import axios, { AxiosResponse } from 'axios';
 import { JwtPayload, verify } from 'jsonwebtoken';
 
-import { BigCommerceConfigurationError } from './errors/BigCommerceConfigurationError';
-import { AuthCallbackQueryParams, AuthResponsePayload, BigCommerceConfig, BigCommerceConfigProperties } from './types';
-import { assertIsError } from './utils/assertIsError';
-import { keysToSnakeCase } from './utils/cases';
+import { AuthCallbackQueryParams, AuthResponsePayload, OAuthConfig } from '../types';
+import { assertIsError } from '../utils/assertIsError';
 
-class BigCommerce {
+class OAuth {
   private config;
 
-  constructor(config: BigCommerceConfig) {
+  constructor(config: OAuthConfig) {
     if (!Object.keys(config).length) {
-      throw new BigCommerceConfigurationError();
+      throw new Error('Config must contain string values for clientId, clientSecret, and authCallback');
+    }
+
+    if (!config.clientId) {
+      throw new Error('Config must contain a clientId');
+    }
+
+    if (!config.clientSecret) {
+      throw new Error('Config must contain a clientSecret');
+    }
+
+    if (!config.authCallback) {
+      throw new Error('Config must contain an authCallback');
     }
 
     this.config = config;
@@ -32,34 +42,22 @@ class BigCommerce {
    */
   async authorize(query: AuthCallbackQueryParams): Promise<AuthResponsePayload> {
     if (!Object.keys(query).length) {
-      throw new Error('Object must contain string values for code, context, and scope');
+      throw new Error('Query must contain string values for code, context, and scope');
     }
 
     const { code, context, scope } = query;
     const { clientId, clientSecret, authCallback } = this.config;
     const loginHost = this.config.loginHost ?? 'login.bigcommerce.com';
 
-    if (!clientId) {
-      throw new BigCommerceConfigurationError(BigCommerceConfigProperties.ClientId);
-    }
-
-    if (!clientSecret) {
-      throw new BigCommerceConfigurationError(BigCommerceConfigProperties.ClientSecret);
-    }
-
-    if (!authCallback) {
-      throw new BigCommerceConfigurationError(BigCommerceConfigProperties.AuthCallback);
-    }
-
-    const payload = keysToSnakeCase({
-      clientId,
-      clientSecret,
-      redirectUri: authCallback,
-      grantType: 'authorization_code',
+    const payload = {
+      client_id: clientId,
+      client_secret: clientSecret,
+      redirect_uri: authCallback,
+      grant_type: 'authorization_code',
       code,
       scope,
       context,
-    });
+    };
 
     try {
       const { data } = await axios.post<AuthResponsePayload, AxiosResponse<AuthResponsePayload>>(
@@ -85,14 +83,6 @@ class BigCommerce {
   verifyJWT(signedPayloadJWT: string): JwtPayload {
     const { clientSecret, clientId } = this.config;
 
-    if (!clientId) {
-      throw new BigCommerceConfigurationError(BigCommerceConfigProperties.ClientId);
-    }
-
-    if (!clientSecret) {
-      throw new BigCommerceConfigurationError(BigCommerceConfigProperties.ClientSecret);
-    }
-
     const decoded = verify(signedPayloadJWT, clientSecret, {
       algorithms: ['HS256'],
       audience: clientId,
@@ -106,4 +96,4 @@ class BigCommerce {
   }
 }
 
-export default BigCommerce;
+export default OAuth;

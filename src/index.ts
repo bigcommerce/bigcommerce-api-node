@@ -1,4 +1,8 @@
-import BigCommerce from './BigCommerce';
+import OAuth from './OAuth';
+
+const BigCommerce = {
+  Auth: OAuth,
+};
 
 export default BigCommerce;
 export * from './types';
