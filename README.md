@@ -85,3 +85,76 @@ The object stored in the `payload` variable above will contain the following key
   url: '/'
 }
 ```
+
+## REST API Resources
+
+The `bigcommerce-api-node` package can be used to communicate with the BigCommerce Public REST API.
+
+```js
+const bigcommerceRest = new BigCommerce.Rest({
+  storeHash: 'yourStoreHash',
+  accessToken: 'yourStoreAccessToken'
+})
+
+// bigcommerceRest.<resource_name>.<method_name>
+```
+
+Each method returns a `Promise` that resolves to a response containing the resource data.
+
+```js
+bigcommerceRest.ordersV2
+  .list({ limit: 5 })
+  .then(orders => console.log(orders))
+  .catch(err => console.error(err));
+```
+
+Some resources contain a `listAll()` method which returns an [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#iterators) allowing you to loop through every single resource available, with pagination handled for you.
+
+```js
+for await (const order of bigcommerceRest.ordersV2.listAll()) {
+  console.log(order);
+}
+```
+
+### Available Resources and Methods
+* ordersV2
+  * `get(orderId)`: Get an Order
+  * `update(orderId, data)`: Update an Order
+  * `archive(orderId)`: Archive an Order
+  * `count()`: Get a Count of Orders
+  * `list([params])`: Get All Orders
+  * `listAll([params])`: Get All Orders (Paginated)
+  * `create(data)`: Create an Order
+  * `archiveAll()`: Archive All Orders
+* ordersV2.orderCoupons
+  * `list(orderId[, params])`: List Order Coupons
+  * `listAll(orderId[, params])`: List Order Coupons (Paginated)
+* ordersV2.orderProducts
+  * `list(orderId[, params])`: List Order Products
+  * `listAll(orderId[, params])`: List Order Products (Paginated)
+  * `get(orderId, productId)`: Get an Order Product
+* ordersV2.orderTaxes
+  * `list(orderId[, params])`: Get All Order Taxes
+  * `listAll(orderId[, params])`: Get All Order Taxes (Paginated)
+* ordersV2.orderStatus
+  * `list()`: Get All Order Statuses
+  * `get(statusId)`: Get a Single Order Status
+* ordersV2.orderShipments
+  * `list(orderId[, params])`: Get Order Shipments
+  * `listAll(orderId[, params])`: Get Order Shipments (Paginated)
+  * `create(orderId, data)`: Create Order Shipment
+  * `deleteAll(orderId)`: Delete All Order Shipments
+  * `count(orderId)`Get a Count of Order Shipments
+  * `get(orderId, shipmentId)`: Get a Shipment
+  * `update(orderId, shipmentId, data)`: Update a Shipment
+  * `delete(orderId, shipmentId)`: Delete an Order Shipment
+* ordersV2.orderShippingAddresses
+  * `list(orderId[, params])`: Get Order Shipping Addresses
+  * `listAll(orderId[, params])`: Get Order Shipping Addresses (Paginated)
+  * `get(orderId, addressId)`: Get a Shipping Address
+  * `update(orderId, addressId, data)`: Update a Shipping Address
+* ordersV2.orderMessages
+  * `list(orderId[, params])`: Get Order Messages
+  * `listAll(orderId[, params])`: Get Order Messages (Paginated)
+* ordersV2.orderShippingQuotes
+  * `list(orderId, addressId)`: Get Order Shipping Quotes
