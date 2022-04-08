@@ -8,20 +8,8 @@ class OAuth {
   private config;
 
   constructor(config: OAuthConfig) {
-    if (!Object.keys(config).length) {
-      throw new Error('Config must contain string values for clientId, clientSecret, and authCallback');
-    }
-
-    if (!config.clientId) {
-      throw new Error('Config must contain a clientId');
-    }
-
-    if (!config.clientSecret) {
-      throw new Error('Config must contain a clientSecret');
-    }
-
-    if (!config.authCallback) {
-      throw new Error('Config must contain an authCallback');
+    if (!config.clientId || !config.clientSecret || !config.authCallback) {
+      throw new Error('Config must contain a clientId, clientSecret, and authCallback');
     }
 
     this.config = config;
@@ -41,8 +29,8 @@ class OAuth {
    *     for API requests
    */
   async authorize(query: AuthCallbackQueryParams): Promise<AuthResponsePayload> {
-    if (!Object.keys(query).length) {
-      throw new Error('Query must contain string values for code, context, and scope');
+    if (!query.code || !query.context || !query.scope) {
+      throw new Error('Query must contain a code, context and scope');
     }
 
     const { code, context, scope } = query;

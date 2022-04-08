@@ -118,5 +118,13 @@ module.exports = {
         '@typescript-eslint/no-duplicate-imports': 'error',
       },
     },
+    {
+      files: ['*.spec.ts'],
+      plugins: ['jest'],
+      rules: {
+        '@typescript-eslint/unbound-method': 'off',
+        'jest/unbound-method': 'error',
+      },
+    },
   ],
 };
