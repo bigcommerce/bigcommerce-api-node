@@ -7,6 +7,10 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=14",
+    "npm": ">=7"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint --fix --max-warnings 0 src/**/*.ts",
