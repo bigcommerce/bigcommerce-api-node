@@ -23,7 +23,8 @@ Then, create a BigCommerce object with configuration options relevant to your us
 
 The main `BigCommerce` import is an object that contains properties for different use cases of the BigCommerce Node Client. The properties available are described below:
 
-* `Auth`: This class can be instantiated and used to handle the OAuth flow that begins when a merchant clicks **Install** on a single-click app. 
+* `Auth`: This class can be instantiated and used to handle the OAuth flow that begins when a merchant clicks **Install** on a single-click app.
+* `Rest`: This class can be instantiated and used to make API requests to the BigCommerce Public REST API.
 
 ## OAuth
 
@@ -86,7 +87,7 @@ The object stored in the `payload` variable above will contain the following key
 }
 ```
 
-## REST API Resources
+## REST
 
 The `bigcommerce-api-node` package can be used to communicate with the BigCommerce Public REST API.
 
