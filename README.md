@@ -34,9 +34,9 @@ First, create a BigCommerce object with `clientId`, `clientSecret`, and `authCal
 
 ```js
 const bigcommerceAuth = new BigCommerce.Auth({
-  clientId: "YOUR_CLIENT_ID",
-  clientSecret: "YOUR_CLIENT_SECRET",
-  authCallback: "https://yourapplication.com/auth",
+  clientId: 'YOUR_CLIENT_ID',
+  clientSecret: 'YOUR_CLIENT_SECRET',
+  authCallback: 'https://yourapplication.com/auth',
 });
 ```
 
@@ -94,7 +94,7 @@ The `bigcommerce-api-node` package can be used to communicate with the BigCommer
 ```js
 const bigcommerceRest = new BigCommerce.Rest({
   storeHash: 'yourStoreHash',
-  accessToken: 'yourStoreAccessToken'
+  accessToken: 'yourStoreAccessToken',
 })
 
 // bigcommerceRest.<resource_name>.<method_name>
@@ -115,6 +115,45 @@ Some resources contain a `listAll()` method which returns an [Iterator](https://
 for await (const order of bigcommerceRest.ordersV2.listAll()) {
   console.log(order);
 }
+```
+
+## Rate Limiting Management
+The `RestClient` class provides information on its status in relation to the BigCommerce API rate limiter. The available information includes:
+* `msToReset`: Time (in milliseconds) until rate limiting window resets
+* `nextWindowTime`: `Date` object for the start of the next rate limiting window
+* `windowSize`: Total size of the current rate limiting window
+* `requestsRemaining`: Number of requests remaining in the current window before rate limiting is enforced
+* `requestsQuota`: Total requests allowed per window
+
+This information is updated on every request. It can be accessed via the `rateLimitManager` property and used to avoid receiving a `429` error from the server.
+```js
+bigcommerceRest.rateLimitManager.status  // <-- { msToReset, windowSize, requestsRemaining, requestsQuota }
+```
+
+`RestClient` can be optionally configured to delay requests until the next rate limiting window when a minimum request threshold is met. 
+```js
+  const bigcommerceRest = new BigCommerce.Rest({
+    storeHash: STORE_HASH,
+    accessToken: ACCESS_TOKEN,
+    rateLimitConfig: {
+      enableWait: true,
+      minRequestsRemaining: 10,
+    },
+```
+
+Additionally, a custom callback can be provided with optional params object to be run when the request threshold is met.
+```js
+  const limitCallback = params => console.log(params.message);
+
+  const bigcommerceRest = new BigCommerce.Rest({
+    storeHash: STORE_HASH,
+    accessToken: ACCESS_TOKEN,
+    rateLimitConfig: {
+      enableWait: false,
+      minRequestsRemaining: 10,
+      callbackParams: { message: 'request threshold reached' },
+      callback: limitCallback  // <-- function called with callbackParams when minRequestsRemaining threashold is met
+    },
 ```
 
 ### Available Resources and Methods

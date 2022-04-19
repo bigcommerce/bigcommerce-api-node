@@ -29,6 +29,7 @@ module.exports = {
   ignorePatterns: ['node_modules', 'dist'],
   rules: {
     'array-callback-return': 'error',
+    'arrow-parens': ['error', 'as-needed'],
     'dot-notation': 'error',
     'guard-for-in': 'error',
     'import/no-absolute-path': 'error',
