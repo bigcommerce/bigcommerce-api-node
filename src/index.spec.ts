@@ -1,6 +1,6 @@
 import OAuth from './OAuth';
 import RestClient from './RestClient';
-import OrdersV2 from './RestClient/endpoints/Orders/v2';
+import OrdersV2 from './RestClient/endpoints/V2/Orders';
 
 import BigCommerce from './index';
 
@@ -28,7 +28,7 @@ describe('BigCommerce REST', () => {
     expect(rest).toBeInstanceOf(RestClient);
   });
 
-  it('should instantiate and expose a ordersV2 property', () => {
-    expect(rest.ordersV2).toBeInstanceOf(OrdersV2);
+  it('should instantiate and expose a V2 property containing orders object', () => {
+    expect(rest.v2.orders).toBeInstanceOf(OrdersV2);
   });
 });
