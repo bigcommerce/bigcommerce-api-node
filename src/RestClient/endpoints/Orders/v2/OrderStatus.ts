@@ -10,7 +10,7 @@ const basePath = '/v2/order_statuses';
  * @param id Optional Order Status ID
  * @returns Either '/v2/order_statuses/:orderStatusId' or '/v2/order_statuses'
  */
-const getBasePath = (id?: number): string => `${basePath}${id ? `/${id}` : ''}`;
+const getBasePath = (id?: number): string => `${basePath}/${id ?? ''}`;
 
 class OrderStatus {
   private client: AxiosInstance;
