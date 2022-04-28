@@ -1,7 +1,8 @@
 import { AxiosInstance } from 'axios';
 
-import { AxiosPromise, V2OrderCouponsResponseBase, V2OrderFiltersBase } from '../../../../types';
 import { paginateById } from '../../../../utils/paginate';
+
+import type { Coupons } from './types';
 
 import { getOrdersPath } from './index';
 
@@ -18,7 +19,7 @@ class OrderCoupons {
    * @param orderId A valid order ID
    * @returns Promise resolving to a response containing the list of coupons associated with an order
    */
-  list(orderId: number, params?: V2OrderFiltersBase): AxiosPromise<V2OrderCouponsResponseBase[]> {
+  list(orderId: number, params?: Coupons['ListFilters']): Coupons['ListResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/coupons`, { params });
   }
 
@@ -33,8 +34,8 @@ class OrderCoupons {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to an order coupon list iterator object
    */
-  listAll(orderId: number, params?: V2OrderFiltersBase): AsyncGenerator<V2OrderCouponsResponseBase, void, unknown> {
-    return paginateById((id: number, args?: V2OrderFiltersBase) => this.list(id, args), orderId, params);
+  listAll(orderId: number, params?: Coupons['ListFilters']): Coupons['ListAllResponse'] {
+    return paginateById((id: number, args?: Coupons['ListFilters']) => this.list(id, args), orderId, params);
   }
 }
 

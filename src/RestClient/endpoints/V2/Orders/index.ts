@@ -1,13 +1,6 @@
 import { AxiosInstance } from 'axios';
 
-import {
-  AxiosPromise,
-  V2OrderCountResponse,
-  V2OrderRequestBase,
-  V2OrderResponseBase,
-  V2OrdersListFilters,
-  V2OrderUpdateRequest,
-} from '../../../../types';
+import { AxiosPromise } from '../../../../types';
 import { paginate } from '../../../../utils/paginate';
 
 import OrderCoupons from './OrderCoupons';
@@ -18,6 +11,7 @@ import OrderShippingAddresses from './OrderShippingAddresses';
 import OrderShippingQuotes from './OrderShippingQuotes';
 import OrderStatus from './OrderStatus';
 import OrderTaxes from './OrderTaxes';
+import type { Orders } from './types';
 
 const ordersPath = '/v2/orders';
 
@@ -59,7 +53,7 @@ class OrdersV2 {
    * @param orderId A valid order ID
    * @returns Promise resolving to a response containing the order data
    */
-  get(orderId: number): AxiosPromise<V2OrderResponseBase> {
+  get(orderId: number): Orders['GetResponse'] {
     return this.client.get(getOrdersPath(orderId));
   }
 
@@ -70,7 +64,7 @@ class OrdersV2 {
    * @param data The data to update on the order
    * @returns Promise resolving to a response containing the updated order data
    */
-  update(orderId: number, data: V2OrderUpdateRequest): AxiosPromise<V2OrderResponseBase> {
+  update(orderId: number, data: Orders['UpdateRequest']): Orders['UpdateResponse'] {
     return this.client.put(getOrdersPath(orderId), data);
   }
 
@@ -89,7 +83,7 @@ class OrdersV2 {
    *
    * @returns Promise resolving to a response containing the order count data
    */
-  count(): AxiosPromise<V2OrderCountResponse> {
+  count(): Orders['CountResponse'] {
     return this.client.get(`${getOrdersPath()}/count`);
   }
 
@@ -99,7 +93,7 @@ class OrdersV2 {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to a response containing the list of orders
    */
-  list(params?: V2OrdersListFilters): AxiosPromise<V2OrderResponseBase[]> {
+  list(params?: Orders['ListFilters']): Orders['ListResponse'] {
     return this.client.get(getOrdersPath(), { params });
   }
 
@@ -114,8 +108,8 @@ class OrdersV2 {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to an order list iterator object
    */
-  listAll(params?: V2OrdersListFilters): AsyncGenerator<V2OrderResponseBase, void, unknown> {
-    return paginate((args?: V2OrdersListFilters) => this.list(args), params);
+  listAll(params?: Orders['ListFilters']): Orders['ListAllResponse'] {
+    return paginate((args?: Orders['ListFilters']) => this.list(args), params);
   }
 
   /**
@@ -124,7 +118,7 @@ class OrdersV2 {
    * @param data Data used to create the order
    * @returns Promise resolving to a response containing the created order data
    */
-  create(data: V2OrderRequestBase): AxiosPromise<V2OrderResponseBase> {
+  create(data: Orders['CreateRequest']): Orders['CreateResponse'] {
     return this.client.post(getOrdersPath(), data);
   }
 

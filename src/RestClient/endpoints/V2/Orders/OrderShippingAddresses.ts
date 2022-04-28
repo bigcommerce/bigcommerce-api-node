@@ -1,12 +1,8 @@
 import { AxiosInstance } from 'axios';
 
-import {
-  AxiosPromise,
-  OrderShippingAddress,
-  V2OrderFiltersBase,
-  V2OrderShippingAddressesResponseBase,
-} from '../../../../types';
 import { paginateById } from '../../../../utils/paginate';
+
+import type { Addresses } from './types';
 
 import { getOrdersPath } from './index';
 
@@ -23,7 +19,7 @@ class OrderShippingAddresses {
    * @param orderId A valid order ID
    * @returns Promise resolving to a response containing the collection of shipping addresses
    */
-  list(orderId: number, params?: V2OrderFiltersBase): AxiosPromise<V2OrderShippingAddressesResponseBase[]> {
+  list(orderId: number, params?: Addresses['ListFilters']): Addresses['ListResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/shipping_addresses`, { params });
   }
 
@@ -39,11 +35,8 @@ class OrderShippingAddresses {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to an order shipping address list iterator object
    */
-  listAll(
-    orderId: number,
-    params?: V2OrderFiltersBase,
-  ): AsyncGenerator<V2OrderShippingAddressesResponseBase, void, unknown> {
-    return paginateById((id: number, args?: V2OrderFiltersBase) => this.list(id, args), orderId, params);
+  listAll(orderId: number, params?: Addresses['ListFilters']): Addresses['ListAllResponse'] {
+    return paginateById((id: number, args?: Addresses['ListFilters']) => this.list(id, args), orderId, params);
   }
 
   /**
@@ -53,7 +46,7 @@ class OrderShippingAddresses {
    * @param addressId A valid shipping address ID
    * @returns Promise resolving to a response containing the shipping address data
    */
-  get(orderId: number, addressId: number): AxiosPromise<V2OrderShippingAddressesResponseBase> {
+  get(orderId: number, addressId: number): Addresses['GetResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/shipping_addresses/${addressId}`);
   }
 
@@ -65,11 +58,7 @@ class OrderShippingAddresses {
    * @param data The data to update the shipping address on the order
    * @returns Promise resolving to a response containing the updated shipping address data
    */
-  update(
-    orderId: number,
-    addressId: number,
-    data: OrderShippingAddress,
-  ): AxiosPromise<V2OrderShippingAddressesResponseBase> {
+  update(orderId: number, addressId: number, data: Addresses['UpdateRequest']): Addresses['UpdateResponse'] {
     return this.client.put(`${getOrdersPath(orderId)}/shipping_addresses/${addressId}`, data);
   }
 }

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 
-import { AxiosPromise, V2OrderShippingQuotesResponseBase } from '../../../../types';
+import type { Quotes } from './types';
 
 import { getOrdersPath } from './index';
 
@@ -18,7 +18,7 @@ class OrderShippingQuotes {
    * @param addressId A valid shipping address ID
    * @returns Promise resolving to a response containing the collection of shipping quotes on an order
    */
-  list(orderId: number, addressId: number): AxiosPromise<V2OrderShippingQuotesResponseBase> {
+  list(orderId: number, addressId: number): Quotes['ListResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/shipping_addresses/${addressId}/shipping_quotes`);
   }
 }

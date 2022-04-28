@@ -10,6 +10,22 @@ A node module for authentication and communication with the BigCommerce API.
 
 Now, you can navigate into the directory of some other package (e.g., [sample-app-nodejs](https://github.com/bigcommerce/sample-app-nodejs)) and run `npm link bigcommerce-api-node` which will then allow you to use and test this package as if it was downloaded from NPM.
 
+## Type Generation
+
+The `bigcommerce-api-node` package automatically generates Typescript types from the Open API spec `.yml` files that power our [public API documentation](https://developer.bigcommerce.com/). While making contributions to the `bigcommerce-api-node` package, you may find it necessary to re-generate types from the spec. 
+
+In order to do so, simply run: 
+
+```sh
+npm run generate
+```
+
+This command will: 
+
+1. Run `npm build` to build the `TypeGenerator.ts` class
+2. Run `TypeGenerator.ts` to generate types
+3. Run `npm build` again to build the types into the distributed Node.js package
+
 ## Usage
 
 First, import the package into your project:
