@@ -4,7 +4,7 @@ const mockList = jest.fn();
 
 beforeEach(() => {
   mockList.mockReturnValueOnce(
-    new Promise((resolve) =>
+    new Promise(resolve =>
       resolve({
         data: [{ id: 1 }, { id: 2 }],
       }),
@@ -12,7 +12,7 @@ beforeEach(() => {
   );
 
   mockList.mockReturnValueOnce(
-    new Promise((resolve) =>
+    new Promise(resolve =>
       resolve({
         data: [{ id: 3 }, { id: 4 }],
       }),
@@ -20,7 +20,7 @@ beforeEach(() => {
   );
 
   mockList.mockReturnValueOnce(
-    new Promise((resolve) =>
+    new Promise(resolve =>
       resolve({
         data: [],
       }),

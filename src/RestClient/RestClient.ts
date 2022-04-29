@@ -1,11 +1,13 @@
 import axios from 'axios';
 
+import RateLimitManager from '../RateLimitManager';
 import { RestClientConfig } from '../types';
 
 import OrdersV2 from './endpoints/Orders/v2';
 
 class RestClient {
   public ordersV2: OrdersV2;
+  public rateLimitManager: RateLimitManager;
 
   constructor(config: RestClientConfig) {
     if (!config.storeHash || !config.accessToken) {
@@ -22,6 +24,10 @@ class RestClient {
       },
     });
 
+    this.rateLimitManager = new RateLimitManager(
+      client,
+      config.rateLimitConfig ?? { enableWait: false, minRequestsRemaining: 1 },
+    );
     this.ordersV2 = new OrdersV2(client);
   }
 }

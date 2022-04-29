@@ -11,6 +11,26 @@ export interface RestClientConfig {
   storeHash: string;
   accessToken: string;
   apiHost?: string;
+  rateLimitConfig?: RateLimitConfig;
+}
+
+export interface RateLimitStatus {
+  msToReset: number;
+  nextWindowTime: Date;
+  windowSize: number;
+  requestsRemaining: number;
+  requestsQuota: number;
+}
+
+type CallbackParams = {
+  [key: string]: unknown;
+};
+
+export interface RateLimitConfig {
+  minRequestsRemaining: number;
+  enableWait: boolean;
+  callbackParams?: CallbackParams;
+  callback?(params?: CallbackParams): void;
 }
 
 export interface AuthCallbackQueryParams {
