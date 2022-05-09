@@ -1,7 +1,8 @@
 import { AxiosInstance } from 'axios';
 
-import { AxiosPromise, V2OrderFiltersBase, V2OrderProductsResponseBase } from '../../../../types';
 import { paginateById } from '../../../../utils/paginate';
+
+import type { Products } from './types';
 
 import { getOrdersPath } from './index';
 
@@ -19,7 +20,7 @@ class OrderProducts {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to a response containing the list of products associated with an order
    */
-  list(orderId: number, params?: V2OrderFiltersBase): AxiosPromise<V2OrderProductsResponseBase[]> {
+  list(orderId: number, params?: Products['ListFilters']): Products['ListResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/products`, { params });
   }
 
@@ -34,8 +35,8 @@ class OrderProducts {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to an order product list iterator object
    */
-  listAll(orderId: number, params?: V2OrderFiltersBase): AsyncGenerator<V2OrderProductsResponseBase, void, unknown> {
-    return paginateById((id: number, args?: V2OrderFiltersBase) => this.list(id, args), orderId, params);
+  listAll(orderId: number, params?: Products['ListFilters']): Products['ListAllResponse'] {
+    return paginateById((id: number, args?: Products['ListFilters']) => this.list(id, args), orderId, params);
   }
 
   /**
@@ -45,7 +46,7 @@ class OrderProducts {
    * @param productId The order product ID
    * @returns Promise resolving to a response containing the single order product data
    */
-  get(orderId: number, productId: number): AxiosPromise<V2OrderProductsResponseBase> {
+  get(orderId: number, productId: number): Products['GetResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/products/${productId}`);
   }
 }

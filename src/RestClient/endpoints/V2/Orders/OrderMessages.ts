@@ -1,7 +1,8 @@
 import { AxiosInstance } from 'axios';
 
-import { AxiosPromise, V2OrderMessagesListFilters, V2OrderMessagesResponseBase } from '../../../../types';
 import { paginateById } from '../../../../utils/paginate';
+
+import type { Messages } from './types';
 
 import { getOrdersPath } from './index';
 
@@ -19,7 +20,7 @@ class OrderMessages {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to a response containing the collection of messages on an order
    */
-  list(orderId: number, params?: V2OrderMessagesListFilters): AxiosPromise<V2OrderMessagesResponseBase[]> {
+  list(orderId: number, params?: Messages['ListFilters']): Messages['ListResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/messages`, { params });
   }
 
@@ -34,11 +35,8 @@ class OrderMessages {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to an order message list iterator object
    */
-  listAll(
-    orderId: number,
-    params?: V2OrderMessagesListFilters,
-  ): AsyncGenerator<V2OrderMessagesResponseBase, void, unknown> {
-    return paginateById((id: number, args?: V2OrderMessagesListFilters) => this.list(id, args), orderId, params);
+  listAll(orderId: number, params?: Messages['ListFilters']): Messages['ListAllResponse'] {
+    return paginateById((id: number, args?: Messages['ListFilters']) => this.list(id, args), orderId, params);
   }
 }
 

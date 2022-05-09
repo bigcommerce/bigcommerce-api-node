@@ -26,7 +26,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['prettier'],
-  ignorePatterns: ['node_modules', 'dist'],
+  ignorePatterns: ['node_modules', 'dist', 'src/generate/generated'],
   rules: {
     'array-callback-return': 'error',
     'arrow-parens': ['error', 'as-needed'],
@@ -76,7 +76,7 @@ module.exports = {
           },
           {
             format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-            selector: 'variable',
+            selector: ['variable', 'classProperty'],
           },
           {
             format: ['camelCase', 'UPPER_CASE'],

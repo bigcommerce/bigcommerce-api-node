@@ -1,7 +1,8 @@
 import { AxiosInstance } from 'axios';
 
-import { AxiosPromise, V2OrderTaxesListFilters, V2OrderTaxesResponseBase } from '../../../../types';
 import { paginateById } from '../../../../utils/paginate';
+
+import type { Taxes } from './types';
 
 import { getOrdersPath } from './index';
 
@@ -19,7 +20,7 @@ class OrderTaxes {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to a response containing the list of taxes associated with an order
    */
-  list(orderId: number, params?: V2OrderTaxesListFilters): AxiosPromise<V2OrderTaxesResponseBase[]> {
+  list(orderId: number, params?: Taxes['ListFilters']): Taxes['ListResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/taxes`, { params });
   }
 
@@ -34,8 +35,8 @@ class OrderTaxes {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to an order tax list iterator object
    */
-  listAll(orderId: number, params?: V2OrderTaxesListFilters): AsyncGenerator<V2OrderTaxesResponseBase, void, unknown> {
-    return paginateById((id: number, args?: V2OrderTaxesListFilters) => this.list(id, args), orderId, params);
+  listAll(orderId: number, params?: Taxes['ListFilters']): Taxes['ListAllResponse'] {
+    return paginateById((id: number, args?: Taxes['ListFilters']) => this.list(id, args), orderId, params);
   }
 }
 

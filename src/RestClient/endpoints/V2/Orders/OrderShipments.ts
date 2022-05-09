@@ -1,14 +1,9 @@
 import { AxiosInstance } from 'axios';
 
-import {
-  AxiosPromise,
-  V2OrderCountResponseBase,
-  V2OrderFiltersBase,
-  V2OrderShipmentsRequestBodyBase,
-  V2OrderShipmentsResponseBase,
-  V2OrderShipmentsUpdateRequest,
-} from '../../../../types';
+import { AxiosPromise } from '../../../../types';
 import { paginateById } from '../../../../utils/paginate';
+
+import type { Shipments } from './types';
 
 import { getOrdersPath } from './index';
 
@@ -26,7 +21,7 @@ class OrderShipments {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to a response containing the collection of shipments
    */
-  list(orderId: number, params?: V2OrderFiltersBase): AxiosPromise<V2OrderShipmentsResponseBase[]> {
+  list(orderId: number, params?: Shipments['ListFilters']): Shipments['ListResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/shipments`, { params });
   }
 
@@ -41,8 +36,8 @@ class OrderShipments {
    * @param params Query parameters used to filter response
    * @returns Promise resolving to an order shipment list iterator object
    */
-  listAll(orderId: number, params?: V2OrderFiltersBase): AsyncGenerator<V2OrderShipmentsResponseBase, void, unknown> {
-    return paginateById((id: number, args?: V2OrderFiltersBase) => this.list(id, args), orderId, params);
+  listAll(orderId: number, params?: Shipments['ListFilters']): Shipments['ListAllResponse'] {
+    return paginateById((id: number, args?: Shipments['ListFilters']) => this.list(id, args), orderId, params);
   }
 
   /**
@@ -52,7 +47,7 @@ class OrderShipments {
    * @param data The data to create the order shipment
    * @returns Promise resolving to a response containing the created shipment data
    */
-  create(orderId: number, data: V2OrderShipmentsRequestBodyBase): AxiosPromise<V2OrderShipmentsResponseBase> {
+  create(orderId: number, data: Shipments['CreateRequest']): Shipments['CreateResponse'] {
     return this.client.post(`${getOrdersPath(orderId)}/shipments`, data);
   }
 
@@ -72,7 +67,7 @@ class OrderShipments {
    * @param orderId A valid order ID
    * @returns Promise resolving to a response containing the shipment count response data for an order
    */
-  count(orderId: number): AxiosPromise<V2OrderCountResponseBase> {
+  count(orderId: number): Shipments['CountResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/shipments/count`);
   }
 
@@ -83,7 +78,7 @@ class OrderShipments {
    * @param shipmentId A valid shipment ID
    * @returns Promise resolving to a response containing the shipment data
    */
-  get(orderId: number, shipmentId: number): AxiosPromise<V2OrderShipmentsResponseBase> {
+  get(orderId: number, shipmentId: number): Shipments['GetResponse'] {
     return this.client.get(`${getOrdersPath(orderId)}/shipments/${shipmentId}`);
   }
 
@@ -95,11 +90,7 @@ class OrderShipments {
    * @param data The data to update the order shipment
    * @returns Promise resolving to a response containing the updated shipment data
    */
-  update(
-    orderId: number,
-    shipmentId: number,
-    data: V2OrderShipmentsUpdateRequest,
-  ): AxiosPromise<V2OrderShipmentsResponseBase> {
+  update(orderId: number, shipmentId: number, data: Shipments['UpdateRequest']): Shipments['UpdateResponse'] {
     return this.client.put(`${getOrdersPath(orderId)}/shipments/${shipmentId}`, data);
   }
 
@@ -110,7 +101,7 @@ class OrderShipments {
    * @param shipmentId A valid shipment ID
    * @returns Promise resolving to a '204 No Content' response if successful
    */
-  delete(orderId: number, shipmentId: number): AxiosPromise<null> {
+  delete(orderId: number, shipmentId: number): AxiosPromise<string> {
     return this.client.delete(`${getOrdersPath(orderId)}/shipments/${shipmentId}`);
   }
 }

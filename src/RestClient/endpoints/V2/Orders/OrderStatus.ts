@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 
-import { AxiosPromise, V2OrderStatusResponseBase } from '../../../../types';
+import type { Status } from './types';
 
 const basePath = '/v2/order_statuses';
 
@@ -24,7 +24,7 @@ class OrderStatus {
    *
    * @returns Promise resolving to a response containing the collection of order statuses
    */
-  list(): AxiosPromise<V2OrderStatusResponseBase[]> {
+  list(): Status['ListResponse'] {
     return this.client.get(getBasePath());
   }
 
@@ -34,7 +34,7 @@ class OrderStatus {
    * @param statusId Order status ID
    * @returns Promise resolving to a response containing the single order status response
    */
-  get(statusId: number): AxiosPromise<V2OrderStatusResponseBase> {
+  get(statusId: number): Status['GetResponse'] {
     return this.client.get(getBasePath(statusId));
   }
 }
