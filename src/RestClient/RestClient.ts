@@ -32,7 +32,7 @@ class RestClient {
     );
 
     this.v2 = new V2(client);
-    this.v3 = new V3();
+    this.v3 = new V3(client);
   }
 }
 
