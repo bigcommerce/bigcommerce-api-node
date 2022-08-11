@@ -1,3 +1,7 @@
+# Locally generated files
+src/generate/generated/**
+!src/generate/generated/.gitkeep
+
 # Logs
 logs
 *.log

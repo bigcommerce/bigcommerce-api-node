@@ -1,11 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
-import { writeFile } from 'fs/promises';
+import { promises } from 'fs';
 import openapiTS from 'openapi-typescript';
 import path from 'path';
 
 import { assertIsError } from '../utils/assertIsError';
 
 import { GitHubRepoTree } from './types';
+
+const { writeFile } = promises;
 
 class TypesGenerator {
   private client: AxiosInstance;
@@ -42,7 +44,7 @@ class TypesGenerator {
         await writeFile(outputPath, output);
       } catch (err) {
         assertIsError(err);
-        process.stderr.write(`${sourceFile}: ${err.name}: ${err.message}\n`);
+        process.stderr.write(`${sourceFile}: ${err.name}: ${err.message}}\n`);
       }
     }
   }

@@ -22,9 +22,9 @@ npm run generate
 
 This command will: 
 
-1. Run `npm build` to build the `TypeGenerator.ts` class
-2. Run `TypeGenerator.ts` to generate types
-3. Run `npm build` again to build the types into the distributed Node.js package
+1. Run `npm run init` to compile the `TypeGenerator.ts` class
+2. Run `dist/generate/TypeGenerator.js` to generate types
+3. Run `npm build` to build the types into the distributed Node.js package
 
 ## Usage
 

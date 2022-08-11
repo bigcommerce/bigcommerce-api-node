@@ -15,7 +15,8 @@
     "build": "tsc",
     "lint": "eslint --fix --max-warnings 0 src/**/*.ts",
     "test": "jest --coverage",
-    "generate": "npm run build && node dist/generate/TypesGenerator && npm run build"
+    "init": "tsc src/generate/TypesGenerator.ts --outDir dist --target es5 --esModuleInterop --moduleResolution node",
+    "generate": "npm run init && node dist/generate/TypesGenerator && npm run build"
   },
   "dependencies": {
     "axios": "^0.26.1",
