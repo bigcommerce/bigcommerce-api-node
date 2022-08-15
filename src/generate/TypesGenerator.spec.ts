@@ -1,10 +1,14 @@
-import { writeFile } from 'fs/promises';
+import { promises } from 'fs';
 import mockAxios from 'jest-mock-axios';
 import openapiTS from 'openapi-typescript';
 
 import { tg } from './TypesGenerator';
 
-jest.mock('fs/promises');
+jest.mock('fs', () => ({
+  promises: {
+    writeFile: jest.fn(),
+  },
+}));
 jest.mock('openapi-typescript');
 
 describe('TypesGenerator', () => {
@@ -123,7 +127,7 @@ describe('TypesGenerator', () => {
       void (await tg.generate());
 
       void expect(openapiTS).toBeCalledTimes(2);
-      void expect(writeFile).toBeCalledTimes(2);
+      void expect(promises.writeFile).toBeCalledTimes(2);
     });
   });
 });
