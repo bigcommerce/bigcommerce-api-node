@@ -18,6 +18,10 @@
     "init": "tsc src/generate/TypesGenerator.ts --outDir dist --target es5 --esModuleInterop --moduleResolution node",
     "generate": "npm run init && node dist/generate/TypesGenerator && npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bigcommerce/bigcommerce-api-node.git"
+  },
   "dependencies": {
     "axios": "^0.26.1",
     "form-data": "^4.0.0",
