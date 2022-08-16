@@ -1,6 +1,6 @@
 {
   "name": "@bigcommerce/api-nodejs",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "author": "BigCommerce",
   "description": "A node module for authentication and communication with the BigCommerce API",
   "main": "dist/index.js",
