@@ -14,6 +14,7 @@ class CustomerAddresses {
 
   /**
    * Returns a list of customer addresses
+   *
    * @param params Query paramaters used to filter response
    * @returns Promise resolving to a list of customer addresses
    */
@@ -36,7 +37,7 @@ class CustomerAddresses {
   /**
    * Updates a customer address
    *
-   * @data Data used to update customer address
+   * @data Data used to update a customer address
    * @returns Promise resolving to the updated customer address
    */
   update(data: CustomerAddress['UpdateRequest']): CustomerAddress['UpdateResponse'] {

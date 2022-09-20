@@ -37,7 +37,7 @@ class CustomerAttributes {
   /**
    * Updates a customer attribute
    *
-   * @data Data used to update customer attribute
+   * @data Data used to update a customer attribute
    * @returns Promise resolving to the updated customer attribute
    */
   update(data: CustomerAttribute['UpdateRequest']): CustomerAttribute['UpdateResponse'] {
