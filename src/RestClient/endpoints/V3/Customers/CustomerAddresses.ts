@@ -1,8 +1,9 @@
 import { AxiosInstance } from 'axios';
+
 import { AxiosPromise } from '../../../../types';
 
-import type { ICustomerAddresses } from './types';
 import { getCustomersPath } from './Customers';
+import type { CustomerAddress } from './types';
 
 class CustomerAddresses {
   private client: AxiosInstance;
@@ -16,8 +17,7 @@ class CustomerAddresses {
    * @param params Query paramaters used to filter response
    * @returns Promise resolving to a list of customer addresses
    */
-
-  list(params?: ICustomerAddresses['ListFilters']): ICustomerAddresses['ListResponse'] {
+  list(params?: CustomerAddress['ListFilters']): CustomerAddress['ListResponse'] {
     return this.client.get(`${getCustomersPath()}/addresses`, {
       params,
     });
@@ -29,8 +29,7 @@ class CustomerAddresses {
    * @param data Data used to create the customer address
    * @returns Promise resolving to a newly created customer address
    */
-
-  create(data: ICustomerAddresses['CreateRequest']): ICustomerAddresses['CreateResponse'] {
+  create(data: CustomerAddress['CreateRequest']): CustomerAddress['CreateResponse'] {
     return this.client.post(`${getCustomersPath()}/addresses`, data);
   }
 
@@ -40,18 +39,17 @@ class CustomerAddresses {
    * @data Data used to update customer address
    * @returns Promise resolving to the updated customer address
    */
-
-  update(data: ICustomerAddresses['UpdateRequest']): ICustomerAddresses['UpdateResponse'] {
+  update(data: CustomerAddress['UpdateRequest']): CustomerAddress['UpdateResponse'] {
     return this.client.put(`${getCustomersPath()}/addresses`, data);
   }
 
   /**
    * Deletes a single customer address
+   *
    * @param params Query params used to a delete customer address
    * @returns Promise resolving to a 204 No Content Response
    */
-
-  delete(params: ICustomerAddresses['DeleteRequest']): AxiosPromise<string> {
+  delete(params: CustomerAddress['DeleteRequest']): AxiosPromise<string> {
     return this.client.delete(`${getCustomersPath()}/addresses`, {
       params,
     });

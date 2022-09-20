@@ -1,6 +1,8 @@
 import { AxiosInstance } from 'axios';
-import type { ICustomers } from './types';
+
 import { AxiosPromise } from '../../../../types';
+
+import type { Customer } from './types';
 
 const customersPath = '/v3/customers';
 
@@ -11,7 +13,7 @@ const customersPath = '/v3/customers';
  * @returns Returns either '/v3/customers' or '/v3/customers/:customerId
  */
 
-export const getCustomersPath = (id?: any): string => `${customersPath}${id ? `/${id}}` : ''}`;
+export const getCustomersPath = (id?: number | string): string => `${customersPath}/${id ?? ''}`;
 
 class Customers {
   private client: AxiosInstance;
@@ -26,8 +28,7 @@ class Customers {
    * @param params Query parameters used to filter the response
    * @returns Promise resolving to a list of categories
    */
-
-  list(params?: ICustomers['ListFilters']): ICustomers['ListResponse'] {
+  list(params?: Customer['ListFilters']): Customer['ListResponse'] {
     return this.client.get(getCustomersPath(), {
       params,
     });
@@ -39,7 +40,7 @@ class Customers {
    * @param data Data used to create the customer
    * @returns Promise resolving to a newly created customer
    */
-  create(data: ICustomers['CreateRequest']): ICustomers['CreateResponse'] {
+  create(data: Customer['CreateRequest']): Customer['CreateResponse'] {
     return this.client.post(getCustomersPath(), data);
   }
 
@@ -49,8 +50,7 @@ class Customers {
    * @data Data used to update customers
    * @returns Promise resolving to the updated customers
    */
-
-  update(data: ICustomers['UpdateRequest']): ICustomers['UpdateResponse'] {
+  update(data: Customer['UpdateRequest']): Customer['UpdateResponse'] {
     return this.client.put(getCustomersPath(), data);
   }
 
@@ -60,8 +60,7 @@ class Customers {
    * @param params Query params used to delete customer
    * @returns Promise resolving to a 204 No Content response
    */
-
-  delete(params: ICustomers['DeleteRequest']): AxiosPromise<string> {
+  delete(params: Customer['DeleteRequest']): AxiosPromise<string> {
     return this.client.delete(getCustomersPath(), {
       params,
     });
