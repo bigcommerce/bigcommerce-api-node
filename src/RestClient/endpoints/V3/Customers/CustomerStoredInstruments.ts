@@ -16,7 +16,7 @@ class CustomerStoredInstruments {
    * @customerId A valid customer id
    * @return Promise resolving to a list of all available store instruments
    */
-  list(customerId: string): CustomerInstrument['ListResponse'] {
+  list(customerId: number): CustomerInstrument['ListResponse'] {
     return this.client.get(`${getCustomersPath(customerId)}/stored-instruments`);
   }
 }

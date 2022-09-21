@@ -13,7 +13,7 @@ const customersPath = '/v3/customers';
  * @returns Returns either '/v3/customers' or '/v3/customers/:customerId
  */
 
-export const getCustomersPath = (id?: number | string): string => `${customersPath}/${id ?? ''}`;
+export const getCustomersPath = (id?: number): string => `${customersPath}/${id ?? ''}`;
 
 class Customers {
   private client: AxiosInstance;
