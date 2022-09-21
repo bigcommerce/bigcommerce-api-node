@@ -16,7 +16,7 @@ class CustomersConsent {
    * @param customerId A valid Customer ID
    * @returns Promise resolving to single customer consent status
    */
-  get(customerId: string): CustomerConsent['GetResponse'] {
+  get(customerId: number): CustomerConsent['GetResponse'] {
     return this.client.get(`${getCustomersPath(customerId)}/consent`);
   }
 
@@ -26,7 +26,7 @@ class CustomersConsent {
    * @data Data used to udpate a customer's consent
    * @returns Promise resolving to the updated customer consent
    */
-  update(customerId: string, data: CustomerConsent['UpdateRequest']): CustomerConsent['UpdateResponse'] {
+  update(customerId: number, data: CustomerConsent['UpdateRequest']): CustomerConsent['UpdateResponse'] {
     return this.client.put(`${getCustomersPath(customerId)}/consent`, data);
   }
 }
