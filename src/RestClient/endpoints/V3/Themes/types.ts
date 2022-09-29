@@ -1,4 +1,4 @@
-import { operations } from '../../../../generate/generated/themes.v3';
+import { operations, paths } from '../../../../generate/generated/themes.v3';
 import { AxiosPromise } from '../../../../types';
 
 export interface Theme {
@@ -6,4 +6,30 @@ export interface Theme {
   CreateRequest: operations['uploadTheme']['requestBody']['content']['multipart/form-data']['file'];
   CreateResponse: AxiosPromise<operations['uploadTheme']['responses']['201']['content']['application/json']>;
   GetResponse: AxiosPromise<operations['getStoreTheme']['responses']['200']['content']['application/json']>;
+}
+
+export interface ThemeAction {
+  GetResponse: AxiosPromise<operations['downloadTheme']['responses']['200']['content']['application/json']['job_id']>;
+  CreateRequest: operations['activateStoreTheme']['requestBody']['content']['application/json'];
+  CreateResponse: AxiosPromise<operations['activateStoreTheme']['responses']['204']['content']['application/json']>;
+}
+
+export interface ThemeConfiguration {
+  ListFilters: paths['/stores/{store_hash}/v3/themes/{uuid}/configurations']['parameters'];
+  ListResponse: AxiosPromise<
+    paths['/stores/{store_hash}/v3/themes/{uuid}/configurations']['get']['responses']['200']['content']['application/json']
+  >;
+  GetResponse: AxiosPromise<
+    paths['/stores/{store_hash}/v3/themes/{uuid}/configurations/validate']['post']['responses']['200']['content']['application/json']
+  >;
+}
+
+export interface ThemeCustomTemplate {
+  GetResponse: AxiosPromise<
+    operations['get-themes-theme_uuid-custom-templates']['responses']['200']['content']['application/json']
+  >;
+}
+
+export interface ThemeJob {
+  GetResponse: AxiosPromise<operations['getJob']['responses']['200']['content']['application/json']>;
 }

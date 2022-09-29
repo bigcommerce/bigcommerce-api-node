@@ -4,7 +4,7 @@ import { AxiosPromise } from '../../../../types';
 
 import type { Theme } from './types';
 
-const themesPath = 'v3/themes';
+export const themesPath = 'v3/themes';
 
 class Themes {
   private client: AxiosInstance;
@@ -36,20 +36,20 @@ class Themes {
   /**
    * Returns a store Theme.
    *
-   * @param themeUUID A valid store theme UUID
+   * @param uuid A valid store theme UUID
    * @returns Promsie resolving to a single theme
    */
-  get(themeUUID: number): Theme['GetResponse'] {
-    return this.client.get(`${themesPath}/${themeUUID}`);
+  get(uuid: number): Theme['GetResponse'] {
+    return this.client.get(`${themesPath}/${uuid}`);
   }
   /**
    * Deletes a  single store theme by UUID
    *
-   * @param themeUUID A valid
+   * @param uuid A valid store theme UUID
    * @returns Promise resolving to a 204 No Content response
    */
-  delete(themeUUID: number): AxiosPromise<string> {
-    return this.client.delete(`${themesPath}/${themeUUID}`);
+  delete(uuid: number): AxiosPromise<string> {
+    return this.client.delete(`${themesPath}/${uuid}`);
   }
 }
 
