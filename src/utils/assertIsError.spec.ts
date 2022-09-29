@@ -1,6 +1,6 @@
 import { assertIsError } from './assertIsError';
 
-describe('asssertIsError', () => {
+describe('assertIsError', () => {
   it('should be a function', () => {
     expect(assertIsError).toBeInstanceOf(Function);
   });

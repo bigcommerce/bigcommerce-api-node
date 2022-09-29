@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 
 import { AxiosPromise } from '../../../../types';
-import { buildImageForm } from '../../../../utils/buildImageForm';
+import { buildMultipartBody } from '../../../../utils/buildMultipartBody';
 
 import { getCategoryPath } from './Category';
 import type { CategoryImage } from './types';
@@ -18,10 +18,10 @@ class CategoryImages {
    *
    * @param id A valid Category ID
    * @param imagePath An absolute path to an image file
-   * @returns Promise resllving to a category image object
+   * @returns Promise resolving to a category image object
    */
   create(id: number, imagePath: string): CategoryImage['CreateResponse'] {
-    const imageForm = buildImageForm(imagePath);
+    const imageForm = buildMultipartBody('image', imagePath);
 
     return this.client.post(`${getCategoryPath(id)}/image`, imageForm, {
       headers: { ...imageForm.getHeaders() },

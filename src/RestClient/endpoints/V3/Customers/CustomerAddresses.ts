@@ -15,7 +15,7 @@ class CustomerAddresses {
   /**
    * Returns a list of customer addresses
    *
-   * @param params Query paramaters used to filter response
+   * @param params Query parameters used to filter response
    * @returns Promise resolving to a list of customer addresses
    */
   list(params?: CustomerAddress['ListFilters']): CustomerAddress['ListResponse'] {

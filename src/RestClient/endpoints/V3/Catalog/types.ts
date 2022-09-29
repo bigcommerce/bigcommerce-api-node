@@ -191,7 +191,7 @@ export interface CategoryAssignments {
   DeleteFilters: operations['DeleteProductsCategoryAssignments']['parameters']['query'];
 }
 
-export interface ChannelAssignemnts {
+export interface ChannelAssignments {
   ListFilters: operations['GetProductsChannelAssignments']['parameters']['query'];
   ListResponse: AxiosPromise<
     operations['GetProductsChannelAssignments']['responses']['200']['content']['application/json']

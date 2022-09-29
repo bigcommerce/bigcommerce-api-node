@@ -15,7 +15,7 @@ class CustomerAttributesValues {
   /**
    * Returns a list of customer attribute values
    *
-   * @param params Query paramters used to filter response
+   * @param params Query parameters used to filter response
    * @return Promise resolving to a list of customer attributes values
    */
   list(params?: CustomerAttributeValue['ListFilters']): CustomerAttributeValue['ListResponse'] {

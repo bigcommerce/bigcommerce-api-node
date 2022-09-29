@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 
-import { buildImageForm } from '../../../../utils/buildImageForm';
+import { buildMultipartBody } from '../../../../utils/buildMultipartBody';
 
 import { getProductsPath } from './Products';
 import type { ProductModifierImage } from './types';
@@ -18,7 +18,7 @@ class ProductModifierImages {
     valueId: number,
     imagePath: string,
   ): ProductModifierImage['CreateResponse'] {
-    const imageForm = buildImageForm(imagePath);
+    const imageForm = buildMultipartBody('image', imagePath);
 
     return this.client.post(
       `${getProductsPath(productId)}/modifiers/${modifierId}/values/${valueId}/image`,
