@@ -23,7 +23,7 @@ class CustomersConsent {
   /**
    * Updates the status of a customer's consent
    * @param customerId A valid Customer ID
-   * @data Data used to udpate a customer's consent
+   * @data Data used to update a customer's consent
    * @returns Promise resolving to the updated customer consent
    */
   update(customerId: number, data: CustomerConsent['UpdateRequest']): CustomerConsent['UpdateResponse'] {

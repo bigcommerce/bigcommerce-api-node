@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 
 import { AxiosPromise } from '../../../../types';
-import { buildImageForm } from '../../../../utils/buildImageForm';
+import { buildMultipartBody } from '../../../../utils/buildMultipartBody';
 
 import { getBrandsPath } from './Brands';
 import type { BrandImage } from './types';
@@ -21,7 +21,7 @@ class BrandImages {
    * @returns Promise resolving to a brand image object
    */
   create(id: number, imagePath: string): BrandImage['CreateResponse'] {
-    const imageForm = buildImageForm(imagePath);
+    const imageForm = buildMultipartBody('image', imagePath);
 
     return this.client.post(`${getBrandsPath(id)}/image`, imageForm, {
       headers: { ...imageForm.getHeaders() },

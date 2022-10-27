@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { AxiosPromise } from '../../../../types';
 
 import { getProductsPath } from './Products';
-import type { ChannelAssignemnts } from './types';
+import type { ChannelAssignments } from './types';
 
 class ProductsChannelAssignments {
   private client: AxiosInstance;
@@ -18,7 +18,7 @@ class ProductsChannelAssignments {
    * @param params Query parameters to filter the response
    * @returns Promise resolving to a list of product channel assignments
    */
-  list(params?: ChannelAssignemnts['ListFilters']): ChannelAssignemnts['ListResponse'] {
+  list(params?: ChannelAssignments['ListFilters']): ChannelAssignments['ListResponse'] {
     return this.client.get(`${getProductsPath()}/channel-assignments`, { params });
   }
 
@@ -28,7 +28,7 @@ class ProductsChannelAssignments {
    * @param data Data used to create a product channel assignment
    * @returns Promise resolving to a 204 No Content response
    */
-  create(data: ChannelAssignemnts['CreateRequest']): AxiosPromise<string> {
+  create(data: ChannelAssignments['CreateRequest']): AxiosPromise<string> {
     return this.client.put(`${getProductsPath()}/channel-assignments`, data);
   }
 
@@ -37,7 +37,7 @@ class ProductsChannelAssignments {
    * @param params Query parameters to filter the response
    * @returns Promise resolving to a 204 No Content response
    */
-  delete(params?: ChannelAssignemnts['DeleteFilters']): AxiosPromise<string> {
+  delete(params?: ChannelAssignments['DeleteFilters']): AxiosPromise<string> {
     return this.client.delete(`${getProductsPath()}/channel-assignments`, { params });
   }
 }
