@@ -16,12 +16,12 @@ export interface ThemeAction {
 }
 
 export interface ThemeConfiguration {
-  ListFilters: paths['/stores/{store_hash}/v3/themes/{uuid}/configurations']['parameters']['query'];
+  ListFilters: paths['/themes/{uuid}/configurations']['get']['parameters']['query'];
   ListResponse: AxiosPromise<
-    paths['/stores/{store_hash}/v3/themes/{uuid}/configurations']['get']['responses']['200']['content']['application/json']
+    paths['/themes/{uuid}/configurations']['get']['responses']['200']['content']['application/json']
   >;
   CreateResponse: AxiosPromise<
-    paths['/stores/{store_hash}/v3/themes/{uuid}/configurations/validate']['post']['responses']['200']['content']['application/json']
+    paths['/themes/{uuid}/configurations/validate']['post']['responses']['200']['content']['application/json']
   >;
 }
 
