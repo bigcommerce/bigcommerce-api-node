@@ -12,8 +12,8 @@ const { writeFile } = promises;
 class TypesGenerator {
   private client: AxiosInstance;
 
-  private REPO_URL = 'https://api.github.com/repos/bigcommerce/api-specs/git/trees/master';
-  private CONTENT_URL = 'https://raw.githubusercontent.com/bigcommerce/api-specs/master/reference/';
+  private REPO_URL = 'https://api.github.com/repos/bigcommerce/api-specs/git/trees/main';
+  private CONTENT_URL = 'https://raw.githubusercontent.com/bigcommerce/api-specs/main/reference/';
 
   private OUTPUT_DIRECTORY_PATH = path.join(process.cwd(), 'src/generate/generated');
   private PRETTIER_CONFIG_PATH = path.join(process.cwd(), '.prettierrc');
