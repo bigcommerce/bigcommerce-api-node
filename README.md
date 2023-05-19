@@ -31,7 +31,7 @@ This command will:
 First, import the package into your project:
 
 ```js
-import BigCommerce from 'bigcommerce-api-node';
+import BigCommerce from '@bigcommerce/api-nodejs';
 ```
 
 Then, create a BigCommerce object with configuration options relevant to your use case.
