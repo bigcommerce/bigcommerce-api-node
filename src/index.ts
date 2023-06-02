@@ -6,5 +6,4 @@ const BigCommerce = {
   Rest: RestClient,
 };
 
-export default BigCommerce;
-export * from './types';
+export = BigCommerce;
