@@ -13,8 +13,7 @@ class TypesGenerator {
   private client: AxiosInstance;
 
   private REPO_URL = 'https://api.github.com/repos/bigcommerce/api-specs/git/trees/main';
-  private CONTENT_URL = 'https://raw.githubusercontent.com/bigcommerce/api-specs/main/reference/';
-  // private CONTENT_URL = 'https://raw.githubusercontent.com/bigcommerce/api-specs/main';
+  private CONTENT_URL = 'https://raw.githubusercontent.com/bigcommerce/api-specs/main';
 
   private OUTPUT_DIRECTORY_PATH = path.join(process.cwd(), 'src/generate/generated');
   private PRETTIER_CONFIG_PATH = path.join(process.cwd(), '.prettierrc');
@@ -33,8 +32,6 @@ class TypesGenerator {
    */
   public async generate(): Promise<void> {
     const sourceFiles = await this.getSourceFiles();
-
-    // console.log(sourceFiles, 'here the source files');
 
     for (const sourceFile of sourceFiles) {
       const outputPath = path.join(
@@ -66,31 +63,24 @@ class TypesGenerator {
    */
   private async getSourceFiles(): Promise<string[]> {
     const sourceRepo = await this.client.get<GitHubRepoTree>(this.REPO_URL);
-    // console.log(sourceRepo, 'here the source repo');
-
-    // console.log(sourceRepo.data.tree, 'here the tree');
     const targetDir = sourceRepo.data.tree.find(file => file.path === 'reference');
-    // // console.log(targetDir, 'here teh targetDir');
-    // const targetDir = sourceRepo.data.tree.
-    // console.log(targetDir, 'here the target DIR');
 
     if (!targetDir) {
       throw new Error('Unable to find a directory containing Open API spec files in provided repo');
     }
 
-    const specFileNames = await this.getSpecFileNames(targetDir);
-
-    // const remoteSourceDir = await this.client.get<GitHubRepoTree>(targetDir.url);
-    // const specFileNames = remoteSourceDir.data.tree.map(file => `${this.CONTENT_URL}${file.path}`);
+    const specFileNames = await this.getSpecFileNames('reference', targetDir);
 
     return specFileNames;
   }
 
-  private async getSpecFileNames(targetDir?: NestedTree): Promise<string[]> {
-    if (!targetDir) {
-      return [];
-    }
+  /**
+   * Returns a list of valid Open API Spec files URLs that could exist within directories or as standalone files.
+   *
+   * @returns Array of Open API Spec file URLs as strings
+   */
 
+  private async getSpecFileNames(targetDirPath: string, targetDir: NestedTree): Promise<string[]> {
     const remoteSourceDir = await this.client.get<GitHubRepoTree>(targetDir.url);
 
     const specFileNames = await remoteSourceDir.data.tree.reduce(
@@ -98,11 +88,9 @@ class TypesGenerator {
         const acc = await accPromise;
 
         if (node.type === 'blob') {
-          return targetDir.path === 'reference'
-            ? [...acc, `${this.CONTENT_URL}${node.path}`]
-            : [...acc, `${this.CONTENT_URL}${targetDir.path}/${node.path}`];
+          return [...acc, `${this.CONTENT_URL}/${targetDirPath}/${node.path}`];
         } else {
-          const nestedSpecFileNames: string[] = await this.getSpecFileNames(node);
+          const nestedSpecFileNames = await this.getSpecFileNames(`${targetDirPath}/${node.path}`, node);
 
           return [...acc, ...nestedSpecFileNames];
         }
