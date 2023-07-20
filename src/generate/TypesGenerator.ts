@@ -69,9 +69,7 @@ class TypesGenerator {
       throw new Error('Unable to find a directory containing Open API spec files in provided repo');
     }
 
-    const specFileNames = await this.getSpecFileNames('reference', targetDir);
-
-    return specFileNames;
+    return await this.getSpecFileNames('reference', targetDir);
   }
 
   /**

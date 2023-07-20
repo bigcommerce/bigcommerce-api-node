@@ -132,8 +132,8 @@ describe('TypesGenerator', () => {
 
       void (await tg.generate());
 
-      void expect(openapiTS).toBeCalledTimes(2);
-      void expect(promises.writeFile).toBeCalledTimes(2);
+      expect(openapiTS).toBeCalledTimes(2);
+      expect(promises.writeFile).toBeCalledTimes(2);
     });
 
     it('should generate a Typescript file for each spec file and/or dir', async () => {
@@ -187,8 +187,8 @@ describe('TypesGenerator', () => {
 
       void (await tg.generate());
 
-      void expect(openapiTS).toBeCalledTimes(3);
-      void expect(promises.writeFile).toBeCalledTimes(3);
+      expect(openapiTS).toBeCalledTimes(3);
+      expect(promises.writeFile).toBeCalledTimes(3);
     });
   });
 });
