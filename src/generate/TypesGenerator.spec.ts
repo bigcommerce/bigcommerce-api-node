@@ -68,6 +68,7 @@ describe('TypesGenerator', () => {
         data: {
           tree: [
             {
+              type: 'blob',
               path: 'reference',
               url: 'https://api.github.com/repos/bigcommerce/api-specs/trees/12345',
             },
@@ -79,9 +80,11 @@ describe('TypesGenerator', () => {
         data: {
           tree: [
             {
+              type: 'blob',
               path: 'foo-spec.yaml',
             },
             {
+              type: 'blob',
               path: 'bar-spec.yml',
             },
           ],
@@ -102,6 +105,7 @@ describe('TypesGenerator', () => {
         data: {
           tree: [
             {
+              type: 'blob',
               path: 'reference',
               url: 'https://api.github.com/repos/bigcommerce/api-specs/trees/12345',
             },
@@ -113,9 +117,11 @@ describe('TypesGenerator', () => {
         data: {
           tree: [
             {
+              type: 'blob',
               path: 'foo-spec.yaml',
             },
             {
+              type: 'blob',
               path: 'bar-spec.yml',
             },
           ],
@@ -126,8 +132,63 @@ describe('TypesGenerator', () => {
 
       void (await tg.generate());
 
-      void expect(openapiTS).toBeCalledTimes(2);
-      void expect(promises.writeFile).toBeCalledTimes(2);
+      expect(openapiTS).toBeCalledTimes(2);
+      expect(promises.writeFile).toBeCalledTimes(2);
+    });
+
+    it('should generate a Typescript file for each spec file and/or dir', async () => {
+      const mockFirstResponse = {
+        data: {
+          tree: [
+            {
+              type: 'blob',
+              path: 'reference',
+              url: 'https://api.github.com/repos/bigcommerce/api-specs/trees/12345',
+            },
+          ],
+        },
+      };
+
+      const mockSecondResponse = {
+        data: {
+          tree: [
+            {
+              type: 'blob',
+              path: 'foo-spec.yaml',
+            },
+            {
+              type: 'blob',
+              path: 'bar-spec.yml',
+            },
+            {
+              type: 'tree',
+              path: 'catalog',
+              url: 'https://api.github.com/repos/bigcommerce/api-specs/trees/123456',
+            },
+          ],
+        },
+      };
+
+      const mockThirdResponse = {
+        data: {
+          tree: [
+            {
+              type: 'blob',
+              path: 'categories-catalog.yml',
+            },
+          ],
+        },
+      };
+
+      mockAxios.get
+        .mockResolvedValueOnce(mockFirstResponse)
+        .mockResolvedValueOnce(mockSecondResponse)
+        .mockResolvedValueOnce(mockThirdResponse);
+
+      void (await tg.generate());
+
+      expect(openapiTS).toBeCalledTimes(3);
+      expect(promises.writeFile).toBeCalledTimes(3);
     });
   });
 });

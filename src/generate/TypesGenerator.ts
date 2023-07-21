@@ -5,7 +5,7 @@ import path from 'path';
 
 import { assertIsError } from '../utils/assertIsError';
 
-import { GitHubRepoTree } from './types';
+import { GitHubRepoTree, NestedTree } from './types';
 
 const { writeFile } = promises;
 
@@ -13,7 +13,7 @@ class TypesGenerator {
   private client: AxiosInstance;
 
   private REPO_URL = 'https://api.github.com/repos/bigcommerce/api-specs/git/trees/main';
-  private CONTENT_URL = 'https://raw.githubusercontent.com/bigcommerce/api-specs/main/reference/';
+  private CONTENT_URL = 'https://raw.githubusercontent.com/bigcommerce/api-specs/main';
 
   private OUTPUT_DIRECTORY_PATH = path.join(process.cwd(), 'src/generate/generated');
   private PRETTIER_CONFIG_PATH = path.join(process.cwd(), '.prettierrc');
@@ -69,8 +69,32 @@ class TypesGenerator {
       throw new Error('Unable to find a directory containing Open API spec files in provided repo');
     }
 
+    return await this.getSpecFileNames('reference', targetDir);
+  }
+
+  /**
+   * Returns a list of valid Open API Spec files URLs that could exist within directories or as standalone files.
+   *
+   * @returns Array of Open API Spec file URLs as strings
+   */
+
+  private async getSpecFileNames(targetDirPath: string, targetDir: NestedTree): Promise<string[]> {
     const remoteSourceDir = await this.client.get<GitHubRepoTree>(targetDir.url);
-    const specFileNames = remoteSourceDir.data.tree.map(file => `${this.CONTENT_URL}${file.path}`);
+
+    const specFileNames = await remoteSourceDir.data.tree.reduce(
+      async (accPromise: Promise<string[]>, node: NestedTree): Promise<string[]> => {
+        const acc = await accPromise;
+
+        if (node.type === 'blob') {
+          return [...acc, `${this.CONTENT_URL}/${targetDirPath}/${node.path}`];
+        } else {
+          const nestedSpecFileNames = await this.getSpecFileNames(`${targetDirPath}/${node.path}`, node);
+
+          return [...acc, ...nestedSpecFileNames];
+        }
+      },
+      Promise.resolve([]),
+    );
 
     return specFileNames;
   }
