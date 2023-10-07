@@ -27,6 +27,7 @@ class CartLineItems {
   /**
    * Creates a new cartLineItem
    *
+   * @param cartId The cart ID
    * @param data Data used to create the cartLineItem
    * @returns Promise resolving to a newly created cartLineItem
    */
@@ -37,6 +38,7 @@ class CartLineItems {
   /**
    * Updates an existing cartLineItem
    *
+   * @param cartId The cart ID
    * @param id The cartLineItem ID
    * @param data Data used to update the cartLineItem
    * @returns Promise resolving to an updated cartLineItem
@@ -48,11 +50,12 @@ class CartLineItems {
   /**
    * Deletes a single cartLineItem by ID
    *
+   * @param cartId The cart ID
    * @param id The cartLineItem ID
    * @param params Query params used to delete cartLineItem
    * @returns Promise resolving to a 204 No Content response
    */
-  delete(cartId: string, id: string, params: CartLineItem['DeleteRequest']): AxiosPromise<string> {
+  delete(cartId: string, id: string, params?: CartLineItem['DeleteRequest']): AxiosPromise<string> {
     return this.client.delete(getCartLineItemsPath(cartId, id), {
       params,
     });

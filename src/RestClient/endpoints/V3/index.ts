@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 
-import CartsV3 from './Cart/Carts';
+import CartsV3 from './Cart';
 import CatalogV3 from './Catalog';
 import CustomersV3 from './Customers';
 import ThemesV3 from './Themes';

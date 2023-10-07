@@ -39,7 +39,7 @@ class Carts {
    * @param params Query params used to get cart
    * @returns Promise resolving to a cart
    */
-  get(id: string, params: Cart['GetRequest']): Cart['GetResponse'] {
+  get(id: string, params?: Cart['GetRequest']): Cart['GetResponse'] {
     return this.client.get(getCartsPath(id), {
       params,
     });
@@ -52,7 +52,7 @@ class Carts {
    * @param params Query params used to delete cart
    * @returns Promise resolving to a 204 No Content response
    */
-  delete(id: string, params: Cart['DeleteRequest']): AxiosPromise<string> {
+  delete(id: string, params?: Cart['DeleteRequest']): AxiosPromise<string> {
     return this.client.delete(getCartsPath(id), {
       params,
     });
