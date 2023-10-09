@@ -13,7 +13,7 @@ export interface Cart {
 export interface CartLineItem {
   CreateRequest: operations['addCartLineItem']['requestBody']['content']['application/json'];
   CreateResponse: AxiosPromise<operations['addCartLineItem']['responses']['201']['content']['application/json']>;
-  UpdateRequest: operations['updateCartLineItem']['parameters']['path'];
+  UpdateRequest: operations['updateCartLineItem']['requestBody']['content']['application/json'];
   UpdateResponse: AxiosPromise<operations['updateCartLineItem']['responses']['200']['content']['application/json']>;
   DeleteRequest: operations['deleteCartLineItem']['parameters']['path'];
   DeleteResponse: AxiosPromise<operations['deleteCartLineItem']['responses']['204']['content']['application/json']>;
