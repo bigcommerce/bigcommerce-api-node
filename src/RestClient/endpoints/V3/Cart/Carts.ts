@@ -13,7 +13,7 @@ const cartsPath = '/v3/carts';
  * @returns Returns either '/v3/carts' or '/v3/carts/:cartId
  */
 
-export const getCartsPath = (id?: string): string => `${cartsPath}/${id ?? ''}`;
+export const getCartsPath = (id?: string): string => (id ? `${cartsPath}/${id}` : cartsPath);
 
 class Carts {
   private client: AxiosInstance;

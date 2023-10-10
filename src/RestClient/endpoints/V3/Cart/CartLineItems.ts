@@ -7,6 +7,7 @@ import type { CartLineItem } from './types';
 
 const cartLineItemsPath = '/items';
 
+const getItemPath = (itemId?: string): string => (itemId ? `${cartLineItemsPath}/${itemId}` : cartLineItemsPath);
 /**
  * Builds a base CartLineItems API path given an optional cartLineItem ID
  *
@@ -15,7 +16,7 @@ const cartLineItemsPath = '/items';
  * @returns Returns either '/v3/cart/:cartId/items' or '/v3/cart/:cartId/items/:itemId
  */
 export const getCartLineItemsPath = (cartId: string, id?: string): string =>
-  `${getCartsPath(cartId)}/${cartLineItemsPath}/${id ?? ''}`;
+  `${getCartsPath(cartId)}/${getItemPath(id)}}`;
 
 class CartLineItems {
   private client: AxiosInstance;
