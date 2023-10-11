@@ -5,7 +5,7 @@ import { AxiosPromise } from '../../../../types';
 import { getCartsPath } from './Carts';
 import type { CartLineItem } from './types';
 
-const cartLineItemsPath = '/items';
+const cartLineItemsPath = 'items';
 
 const getItemPath = (itemId?: string): string => (itemId ? `${cartLineItemsPath}/${itemId}` : cartLineItemsPath);
 /**
@@ -16,7 +16,7 @@ const getItemPath = (itemId?: string): string => (itemId ? `${cartLineItemsPath}
  * @returns Returns either '/v3/cart/:cartId/items' or '/v3/cart/:cartId/items/:itemId
  */
 export const getCartLineItemsPath = (cartId: string, id?: string): string =>
-  `${getCartsPath(cartId)}/${getItemPath(id)}}`;
+  `${getCartsPath(cartId)}/${getItemPath(id)}`;
 
 class CartLineItems {
   private client: AxiosInstance;
