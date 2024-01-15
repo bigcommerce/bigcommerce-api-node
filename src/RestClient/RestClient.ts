@@ -24,6 +24,7 @@ class RestClient {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         'X-Auth-Token': config.accessToken,
       },
+      timeout: config.timeout,
     });
 
     this.rateLimitManager = new RateLimitManager(

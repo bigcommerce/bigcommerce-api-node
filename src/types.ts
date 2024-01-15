@@ -12,6 +12,7 @@ export interface RestClientConfig {
   accessToken: string;
   apiHost?: string;
   rateLimitConfig?: RateLimitConfig;
+  timeout?: number;
 }
 
 export interface RateLimitStatus {
